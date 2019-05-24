@@ -45,7 +45,7 @@ app.get("/scrape", function (req, res) {
             result.summary = $(this).children("div.media-body").children("div.article-info-extended").children("div.summary").text();
 
             console.log(result);
-        
+
 
             // CREATE A NEW ARTICLE
             db.Article.create(result)
@@ -66,22 +66,36 @@ app.get("/scrape", function (req, res) {
 app.get("/articles/saved", function (req, res) {
     db.Article.find({ saved: "true" })
 
+        .then(function (dbArticle) {
+
+            res.json(dbArticle);
+            console.log(dbArticle);
+        })
+        .catch(function (err) {
+
+            res.json(err);
+        });
+
+})
+
+app.get("/", function (req, res) {
+    db.Article.find({})
+
     .then(function (dbArticle) {
 
         res.json(dbArticle);
         console.log(dbArticle);
     })
-    .catch(function (err) {
+            .catch(function (err) {
 
-        res.json(err);
+                res.json(err);
+            })
     });
-
-})
 
 app.get("/articles/:id", function (req, res) {
     db.Article.findOne({ _id: req.params.id })
 
-        .populate("note")
+        .populate("notes")
         .then(function (dbArticle) {
 
             res.json(dbArticle);
@@ -111,7 +125,7 @@ app.post("/articles/:id", function (req, res) {
 
 
 app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!");
+    console.log("App running on port http://localhost:" + PORT);
 });
 
 
