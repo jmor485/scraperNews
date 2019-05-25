@@ -2,11 +2,13 @@ $.getJSON("/articles", function (data) {
 
     for (var i = 0; i < data.length; i++) {
 
-        $("#articles").append("<p data-id='" + data[i]._id + "'>"
-            + data[i].title + "<br />"
-            + data[i].link + "<br />"
-            + data[i].summary + "</p>");
+            $("#articles").append("<div class='div' data-id='" + data[i]._id + "'><h3>" + data[i].title+ "</h3><a href='" + data[i].link + "'>Click Here for Full Article</a><p>" + data[i].summary + "</p></div>");
+        // }
+        // $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />"
+        //     + data[i].link + "<br />"
+        //     + data[i].summary + "</p>");
     }
+
 });
 
 $(document).on("click", "#btn", function () {
@@ -34,7 +36,7 @@ $(document).on("click", "#saved", function () {
         })
 })
 
-$(document).on("click", "p", function () {
+$(document).on("click", ".div", function () {
     $("#notes").empty();
     var thisId = $(this).attr("data-id");
 
