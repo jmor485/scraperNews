@@ -1,11 +1,13 @@
-$.getJSON("/", function (data) {
+$.getJSON("/articles", function (data) {
 
     for (var i = 0; i < data.length; i++) {
 
-        $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "< br>" + data[i].summary + "</p>");
+        $("#articles").append("<p data-id='" + data[i]._id + "'>"
+            + data[i].title + "<br />"
+            + data[i].link + "<br />"
+            + data[i].summary + "</p>");
     }
 });
-
 
 $(document).on("click", "#btn", function () {
     //to empty or not to empty
@@ -18,23 +20,22 @@ $(document).on("click", "#btn", function () {
 
             console.log(data);
 
-
-
         })
+});
 
-    $(document).on("click", "#saved", function () {
+$(document).on("click", "#saved", function () {
 
-        $.ajax({
-            method: "GET",
-            url: "/articles/saved"
-        })
-            .then(function (data) {
-
-            })
+    $.ajax({
+        method: "GET",
+        url: "/articles/saved"
     })
+        .then(function (data) {
 
+        })
+})
+
+$(document).on("click", "p", function () {
     $("#notes").empty();
-
     var thisId = $(this).attr("data-id");
 
 
@@ -44,6 +45,7 @@ $(document).on("click", "#btn", function () {
     })
 
         .then(function (data) {
+
             console.log(data);
 
             $("#notes").append("<h2>" + data.title + "</h2>");
@@ -63,33 +65,32 @@ $(document).on("click", "#btn", function () {
             }
         });
 
-
-
-    $(document).on("click", "#savenote", function () {
-
-        var thisId = $(this).attr("data-id");
-
-
-        $.ajax({
-            method: "POST",
-            url: "/articles/" + thisId,
-            data: {
-
-                title: $("#titleinput").val(),
-
-                body: $("#bodyinput").val()
-            }
-        })
-
-            .then(function (data) {
-
-                console.log(data);
-
-                $("#notes").empty();
-            });
-
-
-        $("#titleinput").val("");
-        $("#bodyinput").val("");
-    })
 });
+
+$(document).on("click", "#savenote", function () {
+
+    var thisId = $(this).attr("data-id");
+
+
+    $.ajax({
+        method: "POST",
+        url: "/articles/" + thisId,
+        data: {
+
+            title: $("#titleinput").val(),
+
+            body: $("#bodyinput").val()
+        }
+    })
+
+        .then(function (data) {
+
+            console.log(data);
+
+            $("#notes").empty();
+        });
+
+
+    $("#titleinput").val("");
+    $("#bodyinput").val("");
+})

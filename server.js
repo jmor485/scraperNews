@@ -40,7 +40,7 @@ app.get("/scrape", function (req, res) {
 
             result.title = $(this).children("div.media-body").children("h3.headline").text();
 
-            result.link = "http://time.com/" + $(this).children("div.media-body").children("h3.headline").find("a").attr("href");
+            result.link = "http://time.com" + $(this).children("div.media-body").children("h3.headline").find("a").attr("href");
 
             result.summary = $(this).children("div.media-body").children("div.article-info-extended").children("div.summary").text();
 
@@ -78,7 +78,7 @@ app.get("/articles/saved", function (req, res) {
 
 })
 
-app.get("/", function (req, res) {
+app.get("/articles", function (req, res) {
     db.Article.find({})
 
     .then(function (dbArticle) {
